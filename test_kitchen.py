@@ -46,8 +46,9 @@ def test_simple_addition():
     converter = Converter()
     assert converter.reduce(total, "g") == grams(500)
 
-def test_addition_across_units():
+def test_addition_then_multiplication():
     total = grams(200).plus(ounces(1))
+    doubled = total.times(2)
     converter = Converter()
-    result = converter.reduce(total, "g")
-    assert result == grams(228.3495)
+    result = converter.reduce(doubled, "g")
+    assert result == grams(456.699)
