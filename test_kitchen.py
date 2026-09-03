@@ -45,3 +45,10 @@ def test_simple_addition():
     total = grams(200).plus(grams(300))
     converter = Converter()
     assert converter.reduce(total, "g") == grams(500)
+
+def test_addition_across_units():
+    total = grams(200).plus(ounces(1))
+    converter = Converter()
+    # สมมติอัตราแปลง 1 oz = 28.3495 g (ปัดตามที่ต้องการ)
+    result = converter.reduce(total, "g")
+    assert result == grams(228)   # ปรับตัวเลขตามอัตราแปลงที่เลือกใช้จริง
