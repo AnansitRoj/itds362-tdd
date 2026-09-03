@@ -1,3 +1,4 @@
+# kitchen.py
 class Quantity:
     def __init__(self, amount, unit):
         self.amount = amount
@@ -9,6 +10,9 @@ class Quantity:
     def plus(self, other):
         return Sum(self, other)
 
+    def reduce(self, unit):
+        return self
+
     def __eq__(self, other):
         return self.amount == other.amount and self.unit == other.unit
 
@@ -16,11 +20,16 @@ class Quantity:
         return f"Quantity({self.amount}, {self.unit!r})"
 
 
-class Converter:
-    def reduce(self, quantity, unit):
-        return quantity   # Fake It: คืนอาร์กิวเมนต์แรกกลับไปตรงๆ
-
 class Sum:
     def __init__(self, left, right):
         self.left = left
         self.right = right
+
+    def reduce(self, unit):
+        amount = self.left.amount + self.right.amount
+        return Quantity(amount, unit)
+
+
+class Converter:
+    def reduce(self, quantity_or_sum, unit):
+        return quantity_or_sum.reduce(unit)
